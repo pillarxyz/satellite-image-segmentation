@@ -10,8 +10,13 @@ from skimage.future import graph
 from skimage.feature import canny
 from skimage import util
 from scipy import ndimage as ndi
+import json
 
-method_list = ["Mean", "Local", "Otsu","HSV", "Sobel", "Canny", "SLIC"]
+method_list = ["Mean", "Local", "Otsu", "HSV", "Sobel", "Canny", "SLIC"]
+
+f = open("methods.json")
+methods_description = json.load(f)
+
 
 def segment(image, method):
     gimage = color.rgb2gray(image)
@@ -43,13 +48,15 @@ def segment(image, method):
         mask = morph.remove_small_holes(morph.remove_small_objects(gimage < 0.7, 300), 500)
         segmented = seg.slic(image, n_segments=100, mask=mask, start_label=1)
         segmented.astype('float64')
-    return segmented
+        
+    return segmented, methods_description[method]
 
-input_image = gr.inputs.Image()
-input_method = gr.inputs.Dropdown(method_list, type="value", label="method")
+input_image = gr.inputs.Image(label="Input Image")
+input_method = gr.inputs.Dropdown(method_list, type="value", label="Method")
 
-output_image = gr.outputs.Image()
+output_image = gr.outputs.Image(label="Output Image")
+output_label = gr.outputs.Textbox(type="str", label="Selected Method")
 
-app = gr.Interface(segment, inputs = [input_image, input_method] , outputs = output_image, theme = 'dark-huggingface', live = True, title = "TDM Project Demo")
+app = gr.Interface(segment, inputs = [input_image, input_method] , outputs = [output_image, output_label], theme = 'dark-huggingface', live = True, title = "TDM Project Demo")
 
 app.launch(share = True, inbrowser = True)

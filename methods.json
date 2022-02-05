@@ -1,0 +1,9 @@
+{
+  "Mean": "All pixels with an intensity higher than the mean of grayscale values are assumed to be foreground.",
+  "Local": "We allow the threshold itself to smoothly vary across the image based on local pixel neighborhood.",
+  "Otsu": "Otsu's method is a variance-based technique to find the threshold value where the weighted variance between the foreground and background pixels is the least. The key idea here is to iterate through all the possible values of threshold and measure the spread of background and foreground pixels. Then find the threshold where the spread is least.",
+  "HSV": "we use HSV(B) or Hue, Saturation, and Value(Brightness) Space to properly segment the image since it gave us more control on The RGB scale by adding saturation and brightness values.",
+  "Sobel": "The Sobel filter is used for edge detection.\nIt works by calculating the gradient of image intensity at each pixel within the image.\nIt finds the direction of the largest increase from light to dark and the rate of change in that direction.\nThe result shows how abruptly or smoothly the image changes at each pixel, and therefore how likely it is that that pixel represents an edge.",
+  "Canny": "Canny edge detection is a image processing method used to detect edges in an image while suppressing noise.",
+  "SLIC": "SLIC (Simple Linear Iterative Clustering) is an algorithm that clusters pixels in the combined five-dimensional color and image plane space to efficiently generate compact, nearly uniform superpixels."
+}
